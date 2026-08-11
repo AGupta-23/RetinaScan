@@ -1,81 +1,143 @@
-# RetinaVision AI — Progress Tracker
+# RetinaScan — Explainable Deep Learning for Diabetic Retinopathy Detection
 
-**Currently On:** Phase 0, Task 0.1
-**Last Updated:** <fill in date each time you work on this>
+**Progress Tracker**
+
+**Currently On:** Phase 1, Task 1.1
+**Last Updated:** _____
 **Kaggle Notebooks Created So Far:** (add links as you create them)
 
 ---
 
-## Phase 0: Project Setup
-- [ ] 0.1 Create local project folder structure
-- [ ] 0.2 Set up git + push skeleton to GitHub
-- [ ] 0.3 Create Kaggle account + verify phone (for GPU access)
-- [ ] 0.4 Locate/bookmark APTOS 2019 dataset on Kaggle
-- [ ] 0.5 Set up local Python environment + requirements.txt
-- [ ] 0.6 Write initial README.md
+## Project Summary
 
-## Phase 1: Kaggle Setup + EDA
-- [ ] 1.1 Create first Kaggle Notebook (retinavision-01-eda)
-- [ ] 1.2 Enable GPU + internet, check quota
-- [ ] 1.3 Load and inspect train.csv
-- [ ] 1.4 Analyze class distribution (note % imbalance here: _____)
-- [ ] 1.5 Visually inspect sample images per class
-- [ ] 1.6 Check image size/aspect ratio variability
-- [ ] 1.7 Save EDA outputs + download figures locally + save Kaggle notebook version
+RetinaScan is an end-to-end deep learning pipeline that classifies retinal fundus images as **DR (Diabetic Retinopathy present)** or **No DR**, using transfer learning on a pretrained ResNet50. It covers the full pipeline — data collection, cleaning, preprocessing, EDA, training, evaluation, Grad-CAM explainability, and deployment as a live Streamlit demo. This is a simplified, binary-classification version (not the earlier 5-class RetinaVision AI approach) — built to be fully explainable and defensible in an interview or viva.
 
-## Phase 2: Preprocessing Pipeline
-- [ ] 2.1 Write preprocessing.py locally (crop, resize, enhance)
-- [ ] 2.2 Pull into new Kaggle notebook (retinavision-02-preprocessing)
-- [ ] 2.3 Visually validate preprocessing on samples
-- [ ] 2.4 Run preprocessing on full dataset, save as Kaggle output dataset
-- [ ] 2.5 Set up augmentation pipeline (albumentations)
-- [ ] 2.6 Handle class imbalance (method chosen: _____)
-- [ ] 2.7 Create stratified train/val/test splits
-- [ ] 2.8 Build and test Dataset/DataLoader class
+**Note:** This repo previously tracked a more complex 5-class severity-grading version (RetinaVision AI, with two-stage transfer learning and Quadratic Weighted Kappa). That approach was scoped down to keep the project simpler and easier to explain end-to-end — this tracker reflects the current, simplified plan.
 
-## Phase 3: Model Architecture & Training
-- [ ] 3.1 Choose backbone (chosen: _____)
-- [ ] 3.2 Modify classification head (approach: classification / ordinal regression — chosen: _____)
-- [ ] 3.3 Set up loss function
-- [ ] 3.4 Set up optimizer + LR schedule
-- [ ] 3.5 Create training Kaggle notebook (retinavision-03-training)
-- [ ] 3.6 Stage 1 training (frozen backbone) — result: _____
-- [ ] 3.7 Stage 2 training (fine-tuning) — result: _____
-- [ ] 3.8 Add checkpointing + early stopping
-- [ ] 3.9 Run full training, save notebook version
-- [ ] 3.10 Download final best model to local models/ folder
+---
 
-## Phase 4: Explainable AI — Grad-CAM
-- [ ] 4.1 Write gradcam.py locally
-- [ ] 4.2 Test in Kaggle notebook
-- [ ] 4.3 Generate heatmap overlays
-- [ ] 4.4 Clinically sanity-check results — notes: _____
-- [ ] 4.5 Save + download sample outputs
+## Phase 1: Project Setup
 
-## Phase 5: Evaluation
-- [ ] 5.1 Run inference on test set
-- [ ] 5.2 Compute Accuracy/Precision/Recall/F1/ROC-AUC
-- [ ] 5.3 Compute Quadratic Weighted Kappa — score: _____
-- [ ] 5.4 Build + analyze confusion matrix
-- [ ] 5.5 (Optional) Cross-dataset validation — done? Y/N, result: _____
-- [ ] 5.6 Download all metrics locally
+**What happens:** Create GitHub repo with a clean folder structure (`data/`, `notebooks/`, `src/`, `models/`, `app/`, `outputs/`). Set up a Kaggle account, verify GPU access. All datasets and heavy training stay on Kaggle — only code lives locally and gets pushed/pulled via `git clone`.
 
-## Phase 6: Local Demo App
-- [ ] 6.1 Choose interface (Streamlit / Gradio): _____
-- [ ] 6.2 Build upload + inference flow
-- [ ] 6.3 Add polish (class descriptions, disclaimer)
-- [ ] 6.4 Test end to end locally
-- [ ] 6.5 (Optional) Deploy publicly — link: _____
+- [ ] 1.1 Create local project folder structure
+- [ ] 1.2 Set up git + push skeleton to GitHub
+- [ ] 1.3 Create Kaggle account + verify phone (for GPU access)
+- [ ] 1.4 Locate/bookmark APTOS 2019 dataset on Kaggle
+- [ ] 1.5 Set up local Python environment + requirements.txt
+- [ ] 1.6 Write initial README.md
 
-## Phase 7: Documentation & Final Report
-- [ ] 7.1 Finalize README.md
-- [ ] 7.2 Write limitations section
-- [ ] 7.3 Compile final report (if applicable)
-- [ ] 7.4 Final GitHub cleanup
+---
+
+## Phase 2: Data Collection
+
+**What happens:** Download the APTOS 2019 Blindness Detection dataset directly inside the Kaggle notebook — no local download needed. ~3,600 labeled retinal images across 5 severity classes (0–4).
+
+- [ ] 2.1 Create first Kaggle Notebook (`retinascan-01-data`)
+- [ ] 2.2 Enable GPU + internet, check quota
+- [ ] 2.3 Load dataset inside notebook, verify file counts match `train.csv`
+- [ ] 2.4 Save Kaggle notebook version
+
+---
+
+## Phase 3: Data Cleaning & Label Conversion
+
+**What happens:** Check for corrupt/unreadable images and drop them. Convert 5-class severity labels into binary: class 0 → "No DR" (0), classes 1–4 → "DR" (1). Check class balance.
+
+- [ ] 3.1 Scan for corrupt/unreadable images, drop them
+- [ ] 3.2 Convert labels to binary (No DR / DR)
+- [ ] 3.3 Check class balance (note % split here: _____)
+- [ ] 3.4 Save clean CSV mapping filenames → binary labels
+
+---
+
+## Phase 4: Preprocessing
+
+**What happens:** Resize all images to 224×224 (ResNet50 input size). Normalize using ImageNet mean/std. Stratified split into train (70%) / val (15%) / test (15%).
+
+- [ ] 4.1 Write preprocessing script (resize + normalize)
+- [ ] 4.2 Pull into Kaggle notebook (`retinascan-02-preprocessing`)
+- [ ] 4.3 Visually validate preprocessing on samples
+- [ ] 4.4 Create stratified train/val/test splits
+- [ ] 4.5 Build and test Dataset/DataLoader class
+
+---
+
+## Phase 5: Exploratory Data Analysis (EDA)
+
+**What happens:** Plot class distribution. Visualize sample images per class. Check image dimensions, color channels, and obvious quality issues.
+
+- [ ] 5.1 Plot class distribution (DR vs No DR counts)
+- [ ] 5.2 Visualize sample images from each class
+- [ ] 5.3 Check image dimensions/quality issues
+- [ ] 5.4 Save EDA figures locally + save Kaggle notebook version
+
+---
+
+## Phase 6: Model Building
+
+**What happens:** Load ResNet50 pretrained on ImageNet. Replace final layer for binary output. Freeze early layers, unfreeze last few layers (single-stage fine-tuning).
+
+- [ ] 6.1 Load pretrained ResNet50 (torchvision)
+- [ ] 6.2 Replace final FC layer for binary output
+- [ ] 6.3 Freeze early layers, unfreeze last few
+- [ ] 6.4 Sanity-check forward pass on a batch
+
+---
+
+## Phase 7: Training (on Kaggle GPU)
+
+**What happens:** Train using Binary Cross-Entropy loss + Adam optimizer over 10–20 epochs. Track train/val accuracy and loss per epoch. Save best checkpoint.
+
+- [ ] 7.1 Create training Kaggle notebook (`retinascan-03-training`)
+- [ ] 7.2 Set up loss (BCE) + optimizer (Adam)
+- [ ] 7.3 Run training loop, log accuracy/loss per epoch
+- [ ] 7.4 Watch for overfitting via val curves
+- [ ] 7.5 Save best checkpoint (`best_model.pth`) — val result: _____
+- [ ] 7.6 Download final model to local `models/` folder
+
+---
+
+## Phase 8: Evaluation
+
+**What happens:** Run the trained model on the held-out test set. Compute accuracy, F1-score, precision, recall, confusion matrix. Analyze misclassifications.
+
+- [ ] 8.1 Run inference on test set
+- [ ] 8.2 Compute Accuracy/Precision/Recall/F1 — results: _____
+- [ ] 8.3 Build + analyze confusion matrix
+- [ ] 8.4 Review misclassified samples for patterns
+- [ ] 8.5 Download metrics + confusion matrix locally
+
+---
+
+## Phase 9: Explainability with Grad-CAM
+
+**What happens:** Apply Grad-CAM (`pytorch-grad-cam`) on sample test images to generate heatmaps showing which regions influenced each prediction. Overlay on original images, save side-by-side comparisons.
+
+- [ ] 9.1 Write Grad-CAM script
+- [ ] 9.2 Test on sample predictions in Kaggle notebook
+- [ ] 9.3 Generate heatmap overlays (original vs. heatmap)
+- [ ] 9.4 Save + download sample heatmap outputs
+
+---
+
+## Phase 10: Deployment & Documentation
+
+**What happens:** Download trained model + sample images locally. Build Streamlit app: upload image → preprocess → predict → display result + confidence + Grad-CAM heatmap. Write final README with problem statement, dataset, pipeline, results, and how to run.
+
+- [ ] 10.1 Choose interface: Streamlit
+- [ ] 10.2 Build upload + preprocessing + inference flow
+- [ ] 10.3 Display prediction + confidence score
+- [ ] 10.4 Display Grad-CAM heatmap alongside original image
+- [ ] 10.5 Test end-to-end locally
+- [ ] 10.6 Finalize README.md (problem statement, dataset, pipeline, results, how to run, screenshots)
+- [ ] 10.7 Write limitations section (regulatory, domain shift, no clinical validation)
+- [ ] 10.8 Final GitHub cleanup
 
 ---
 
 ## Notes / Blockers Log
+
 (Use this space to jot down anything you got stuck on, so future-you has context)
 
 -
