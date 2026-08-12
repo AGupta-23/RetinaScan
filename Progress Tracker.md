@@ -2,9 +2,9 @@
 
 **Progress Tracker**
 
-**Currently On:** Phase 1, Task 1.1
-**Last Updated:** _____
-**Kaggle Notebooks Created So Far:** (add links as you create them)
+**Currently On:** Phase 4, Task 4.1
+**Last Updated:** 12th Aug
+**Kaggle Notebooks Created So Far:** --> https://www.kaggle.com/code/abhidhagupta/retinascan-01-data/edit/run/341927887
 
 ---
 
@@ -33,10 +33,10 @@ RetinaScan is an end-to-end deep learning pipeline that classifies retinal fundu
 
 **What happens:** Download the APTOS 2019 Blindness Detection dataset directly inside the Kaggle notebook — no local download needed. ~3,600 labeled retinal images across 5 severity classes (0–4).
 
-- [ ] 2.1 Create first Kaggle Notebook (`retinascan-01-data`)
-- [ ] 2.2 Enable GPU + internet, check quota
-- [ ] 2.3 Load dataset inside notebook, verify file counts match `train.csv`
-- [ ] 2.4 Save Kaggle notebook version
+- [✅] 2.1 Create first Kaggle Notebook (`retinascan-01-data`)
+- [✅] 2.2 Enable GPU + internet, check quota
+- [✅] 2.3 Load dataset inside notebook, verify file counts match `train.csv`
+- [✅] 2.4 Save Kaggle notebook version
 
 ---
 
@@ -44,10 +44,10 @@ RetinaScan is an end-to-end deep learning pipeline that classifies retinal fundu
 
 **What happens:** Check for corrupt/unreadable images and drop them. Convert 5-class severity labels into binary: class 0 → "No DR" (0), classes 1–4 → "DR" (1). Check class balance.
 
-- [ ] 3.1 Scan for corrupt/unreadable images, drop them
-- [ ] 3.2 Convert labels to binary (No DR / DR)
-- [ ] 3.3 Check class balance (note % split here: _____)
-- [ ] 3.4 Save clean CSV mapping filenames → binary labels
+- [✅] 3.1 Scan for corrupt/unreadable images, drop them
+- [✅] 3.2 Convert labels to binary (No DR / DR)
+- [✅] 3.3 Check class balance (note % split here: No DR 49.29%, DR 50.71%)
+- [✅] 3.4 Save clean CSV mapping filenames → binary labels
 
 ---
 
