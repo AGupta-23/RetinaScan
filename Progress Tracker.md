@@ -77,10 +77,10 @@ RetinaScan is an end-to-end deep learning pipeline that classifies retinal fundu
 
 **What happens:** Load ResNet50 pretrained on ImageNet. Replace final layer for binary output. Freeze early layers, unfreeze last few layers (single-stage fine-tuning).
 
-- [ ] 6.1 Load pretrained ResNet50 (torchvision)
-- [ ] 6.2 Replace final FC layer for binary output
-- [ ] 6.3 Freeze early layers, unfreeze last few
-- [ ] 6.4 Sanity-check forward pass on a batch
+- [✅] 6.1 Load pretrained ResNet50 (torchvision)
+- [✅] 6.2 Replace final FC layer for binary output
+- [✅] 6.3 Freeze early layers, unfreeze last few
+- [✅] 6.4 Sanity-check forward pass on a batch
 
 ---
 
