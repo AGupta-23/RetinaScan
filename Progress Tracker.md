@@ -2,9 +2,8 @@
 
 **Progress Tracker**
 
-**Currently On:** Phase 4, Task 4.1
-**Last Updated:** 12th Aug
-**Kaggle Notebooks Created So Far:** --> https://www.kaggle.com/code/abhidhagupta/retinascan-01-data/edit/run/341927887
+**Currently On:** Phase 6, Task 6.1
+**Last Updated:** 14th Aug
 
 ---
 
@@ -67,10 +66,10 @@ RetinaScan is an end-to-end deep learning pipeline that classifies retinal fundu
 
 **What happens:** Plot class distribution. Visualize sample images per class. Check image dimensions, color channels, and obvious quality issues.
 
-- [ ] 5.1 Plot class distribution (DR vs No DR counts)
-- [ ] 5.2 Visualize sample images from each class
-- [ ] 5.3 Check image dimensions/quality issues
-- [ ] 5.4 Save EDA figures locally + save Kaggle notebook version
+- [✅] 5.1 Plot class distribution (DR vs No DR counts)
+- [✅] 5.2 Visualize sample images from each class
+- [✅] 5.3 Check image dimensions/quality issues
+- [✅] 5.4 Save EDA figures locally + save Kaggle notebook version
 
 ---
 
