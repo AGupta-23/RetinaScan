@@ -55,11 +55,11 @@ RetinaScan is an end-to-end deep learning pipeline that classifies retinal fundu
 
 **What happens:** Resize all images to 224×224 (ResNet50 input size). Normalize using ImageNet mean/std. Stratified split into train (70%) / val (15%) / test (15%).
 
-- [ ] 4.1 Write preprocessing script (resize + normalize)
-- [ ] 4.2 Pull into Kaggle notebook (`retinascan-02-preprocessing`)
-- [ ] 4.3 Visually validate preprocessing on samples
-- [ ] 4.4 Create stratified train/val/test splits
-- [ ] 4.5 Build and test Dataset/DataLoader class
+- [✅] 4.1 Write preprocessing script (resize + normalize)
+- [✅] 4.2 Pull into Kaggle notebook (`retinascan-02-preprocessing`)
+- [✅] 4.3 Visually validate preprocessing on samples
+- [✅] 4.4 Create stratified train/val/test splits
+- [✅] 4.5 Build and test Dataset/DataLoader class
 
 ---
 
@@ -138,6 +138,7 @@ RetinaScan is an end-to-end deep learning pipeline that classifies retinal fundu
 
 ## Notes / Blockers Log
 
-(Use this space to jot down anything you got stuck on, so future-you has context)
+1. os library - file path issues
+2. image file names --> never stored in .png form anywhere in csvs --> have to be converted thru os.path.join
 
 -
