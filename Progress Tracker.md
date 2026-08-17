@@ -88,12 +88,12 @@ RetinaScan is an end-to-end deep learning pipeline that classifies retinal fundu
 
 **What happens:** Train using Binary Cross-Entropy loss + Adam optimizer over 10–20 epochs. Track train/val accuracy and loss per epoch. Save best checkpoint.
 
-- [ ] 7.1 Create training Kaggle notebook (`retinascan-03-training`)
-- [ ] 7.2 Set up loss (BCE) + optimizer (Adam)
-- [ ] 7.3 Run training loop, log accuracy/loss per epoch
-- [ ] 7.4 Watch for overfitting via val curves
-- [ ] 7.5 Save best checkpoint (`best_model.pth`) — val result: _____
-- [ ] 7.6 Download final model to local `models/` folder
+- [✅] 7.1 Create training Kaggle notebook (`retinascan-05-training`)
+- [✅] 7.2 Set up loss (BCE) + optimizer (Adam)
+- [✅] 7.3 Run training loop, log accuracy/loss per epoch
+- [✅] 7.4 Watch for overfitting via val curves
+- [✅] 7.5 Save best checkpoint (`best_model.pth`) — val result: _____--New best model saved (val_loss=0.0781)
+- [✅] 7.6 Download final model to local `models/` folder
 
 ---
 
