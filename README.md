@@ -64,7 +64,25 @@ The trained model is evaluated on a held-out test set using accuracy, F1-score, 
 
 ## Explainability — Grad-CAM
 
-A trained deep learning model is normally a "black box" — it outputs a prediction with no visible reasoning, which is a serious trust problem in any medical-adjacent context. **Grad-CAM** addresses this by generating a heatmap over the input image, highlighting which pixel regions most influenced the model's prediction. Heatmaps are generated for sample test images and overlaid on the originals, turning the system from a black-box classifier into an interpretable one.
+A trained deep learning model is normally a "black box" — it outputs a prediction with no visible reasoning, which is a serious trust problem in any medical-adjacent context. **Grad-CAM** addresses this by generating a heatmap over the input image, highlighting which pixel regions most influenced the model's prediction.
+
+Grad-CAM was applied to five test-set cases — two false negatives, two false positives, and one correctly-classified true positive — targeting the last convolutional block of ResNet50 (`layer4`), to investigate whether the model's errors stemmed from ambiguous cases or from poor attention localization.
+
+| Case | True | Pred | Prob | Finding |
+|---|---|---|---|---|
+| `57469423a012` | DR | No DR | 0.419 | Attention on the peripheral rim; visible exudate clusters center-frame were not attended to. |
+| `310c27067ac0` | DR | No DR | 0.265 | Attention fixated on the optic disc rather than peripheral tissue. |
+| `7ad0c4975890` | No DR | DR | 0.942 | Attention fixated on the optic disc on a true No-DR image. |
+| `d7e5fe5245e0` | No DR | DR | 0.707 | Attention on the macular region despite no visible lesions. |
+| `44e951e45dca` | DR | DR | 0.963 | Attention correctly localized onto a visible exudate cluster. |
+
+![False Negative 1](outputs/gradcam_falseneg_1_57469423a012.png)
+![False Negative 2](outputs/gradcam_falseneg_2_310c27067ac0.png)
+![False Positive 1](outputs/gradcam_falsepos_1_7ad0c4975890.png)
+![False Positive 2](outputs/gradcam_falsepos_2_d7e5fe5245e0.png)
+![Correct Prediction Baseline](outputs/gradcam_correct_1_44e951e45dca.png)
+
+**Key finding:** two of the four error cases show the model fixating on the optic disc — a normal anatomical landmark with no diagnostic relevance to DR — rather than on lesion regions. This is a specific, recurring failure mode rather than random misclassification noise, and suggests the model may have partly learned disc-proximity as a spurious shortcut correlated with the DR label in training data, rather than a robust lesion-recognition feature. The correctly-classified baseline case, by contrast, shows attention localizing precisely onto visible pathology — demonstrating that when the model gets it right, it's for the right reasons.
 
 ---
 

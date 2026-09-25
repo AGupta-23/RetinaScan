@@ -113,10 +113,10 @@ RetinaScan is an end-to-end deep learning pipeline that classifies retinal fundu
 
 **What happens:** Apply Grad-CAM (`pytorch-grad-cam`) on sample test images to generate heatmaps showing which regions influenced each prediction. Overlay on original images, save side-by-side comparisons.
 
-- [ ] 9.1 Write Grad-CAM script
-- [ ] 9.2 Test on sample predictions in Kaggle notebook
-- [ ] 9.3 Generate heatmap overlays (original vs. heatmap)
-- [ ] 9.4 Save + download sample heatmap outputs
+- [✅] 9.1 Write Grad-CAM script
+- [✅] 9.2 Test on sample predictions in Kaggle notebook
+- [✅] 9.3 Generate heatmap overlays (original vs. heatmap)
+- [✅] 9.4 Save + download sample heatmap outputs
 
 ---
 
