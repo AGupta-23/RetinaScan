@@ -110,14 +110,25 @@ streamlit run app/app.py
 
 ## Results
 
-| Metric | Value |
-|---|---|
-| Accuracy | _TBD_ |
-| F1-score | _TBD_ |
-| Precision | _TBD_ |
-| Recall | _TBD_ |
+Evaluated on a held-out test set of 550 images (stratified 15% split, unseen during training).
 
-*(To be filled in after training and evaluation.)*
+| Metric    | Value  |
+| --------- | ------ |
+| Accuracy  | 96.18% |
+| F1-score  | 0.9623 |
+| Precision | 0.9640 |
+| Recall    | 0.9606 |
+
+**Confusion Matrix:**
+
+|            | Predicted No DR | Predicted DR |
+| ---------- | ---------------- | ------------- |
+| **Actual No DR** | 261 | 10 |
+| **Actual DR**    | 11  | 268 |
+
+![Confusion Matrix](outputs/confusion_matrix.png)
+
+**Error analysis:** 21 misclassifications total (10 false positives, 11 false negatives). Recall was prioritized over precision in this context — a missed DR case (false negative) carries a higher real-world cost than a false alarm. Of the 11 false negatives, 3 were borderline predictions (probability 0.40–0.48) that a lower decision threshold would likely catch, while the remaining false negatives were confidently wrong, flagged as priority candidates for Grad-CAM inspection in Phase 9.
 
 ---
 

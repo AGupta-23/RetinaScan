@@ -1,0 +1,22 @@
+filename,label,pred,prob,correct,error_type
+57469423a012,1,0,0.4189558,False,False Negative (missed DR)
+310c27067ac0,1,0,0.2645989,False,False Negative (missed DR)
+7ad0c4975890,0,1,0.9419142,False,False Positive
+d7e5fe5245e0,0,1,0.70699894,False,False Positive
+5548a7961a3e,1,0,0.29101992,False,False Negative (missed DR)
+61da799bf0aa,0,1,0.54934436,False,False Positive
+e12b67835e03,1,0,0.008802622,False,False Negative (missed DR)
+bc73ce76ec43,1,0,0.0877812,False,False Negative (missed DR)
+cb02bb47fdc5,0,1,0.9980725,False,False Positive
+365f8c01d994,1,0,0.013782214,False,False Negative (missed DR)
+2221cf5c7935,0,1,0.9996191,False,False Positive
+735836b1ffa6,0,1,0.99844474,False,False Positive
+da6389d129aa,0,1,0.92229086,False,False Positive
+2d07162a13b1,0,1,0.8492259,False,False Positive
+e1ab92228e60,0,1,0.6282183,False,False Positive
+27e4c800a449,1,0,0.476225,False,False Negative (missed DR)
+253e96488cfb,0,1,0.97246,False,False Positive
+144a1a426137,1,0,0.39569575,False,False Negative (missed DR)
+e9129ce55fd7,1,0,0.25190338,False,False Negative (missed DR)
+259d30f693b6,1,0,0.041496295,False,False Negative (missed DR)
+367c7049929c,1,0,0.073138416,False,False Negative (missed DR)

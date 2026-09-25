@@ -101,11 +101,11 @@ RetinaScan is an end-to-end deep learning pipeline that classifies retinal fundu
 
 **What happens:** Run the trained model on the held-out test set. Compute accuracy, F1-score, precision, recall, confusion matrix. Analyze misclassifications.
 
-- [ ] 8.1 Run inference on test set
-- [ ] 8.2 Compute Accuracy/Precision/Recall/F1 — results: _____
-- [ ] 8.3 Build + analyze confusion matrix
-- [ ] 8.4 Review misclassified samples for patterns
-- [ ] 8.5 Download metrics + confusion matrix locally
+- [✅] 8.1 Run inference on test set
+- [✅] 8.2 Compute Accuracy/Precision/Recall/F1 — results: _____
+- [✅] 8.3 Build + analyze confusion matrix
+- [✅] 8.4 Review misclassified samples for patterns
+- [✅] 8.5 Download metrics + confusion matrix locally
 
 ---
 
