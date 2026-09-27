@@ -137,7 +137,7 @@ def render_workbench(model, device):
         borderline = is_borderline(prob)
 
         with st.spinner("Making the heatmap…"):
-            overlay = generate_gradcam(model, input_tensor, device, prob)
+            overlay = generate_gradcam(model, input_tensor, device, prob, pil_image)
 
         # --- side-by-side, matched-size images ---
         col1, col2 = st.columns(2, gap="medium")

@@ -1,25 +1,11 @@
 """Grad-CAM overlay and matched square display for the two image panes."""
 
+import cv2
 import numpy as np
 from PIL import Image
 from pytorch_grad_cam import GradCAM
 from pytorch_grad_cam.utils.image import show_cam_on_image
 from pytorch_grad_cam.utils.model_targets import BinaryClassifierOutputTarget
-
-from src.dataset import IMAGENET_MEAN, IMAGENET_STD
-
-
-def denormalize(tensor):
-    """
-    Undo ImageNet normalisation and return a float32 HxWx3 array in [0, 1]
-    suitable for show_cam_on_image().
-    """
-    mean = np.array(IMAGENET_MEAN, dtype=np.float32)
-    std = np.array(IMAGENET_STD, dtype=np.float32)
-    img = tensor.squeeze(0).permute(1, 2, 0).cpu().numpy()  # HxWx3
-    img = img * std + mean
-    img = np.clip(img, 0.0, 1.0)
-    return img.astype(np.float32)
 
 
 def pad_for_view(image, size=720, inset=0.04):
@@ -41,14 +27,31 @@ def pad_for_view(image, size=720, inset=0.04):
     return canvas
 
 
-def generate_gradcam(model, input_tensor, device, prob):
+def generate_gradcam(model, input_tensor, device, prob, original_image):
     """
-    Generate a Grad-CAM heatmap overlay.
+    Generate a Grad-CAM heatmap overlay, resized back onto the ORIGINAL
+    (non-stretched) image dimensions before overlaying.
+
+    Grad-CAM itself is computed on the model's actual input (a 224x224
+    tensor produced by preprocess_transform, which uses a plain
+    aspect-ratio-breaking resize -- transforms.Resize((224, 224))). If the
+    resulting heatmap were overlaid on that same stretched square, it would
+    align correctly with the model's own input space but NOT with the
+    original, unstretched photo shown in the adjacent "Your photo" panel --
+    making correctly-located attention look like it's pointing at the wrong
+    anatomical region. Resizing the heatmap onto original_image's true
+    dimensions (instead of denormalizing the stretched tensor) fixes that
+    display misalignment.
 
     Target layer: model.layer4[-1]  (last conv block of ResNet50)
     Target class: BinaryClassifierOutputTarget  (single-logit output)
 
-    Returns an HxWx3 uint8 RGB overlay image.
+    Args:
+        original_image: the original PIL image (pre-preprocessing), used
+            only to recover the true aspect ratio/dimensions for display.
+
+    Returns an HxWx3 uint8 RGB overlay image, matching original_image's
+    dimensions.
     """
     target_layers = [model.layer4[-1]]
     # BinaryClassifierOutputTarget is correct for single-logit output;
@@ -60,8 +63,17 @@ def generate_gradcam(model, input_tensor, device, prob):
     with GradCAM(model=model, target_layers=target_layers) as cam:
         grayscale_cam = cam(input_tensor=input_on_device, targets=targets)
 
-    grayscale_cam = grayscale_cam[0]       # HxW float in [0, 1]
-    rgb_image = denormalize(input_tensor)  # HxWx3 float in [0, 1]
+    grayscale_cam = grayscale_cam[0]  # 224x224 float32, in [0, 1]
 
-    overlay = show_cam_on_image(rgb_image, grayscale_cam, use_rgb=True)
-    return overlay                         # HxWx3 uint8
+    # Recover the original (unstretched) image as a float32 RGB array in
+    # [0, 1] -- this is what the heatmap gets overlaid onto, NOT the
+    # denormalized stretched tensor.
+    original_rgb = np.array(original_image.convert("RGB")).astype(np.float32) / 255.0
+    orig_h, orig_w = original_rgb.shape[:2]
+
+    # Resize the heatmap from the model's 224x224 space onto the original
+    # image's true dimensions so the two panels share the same geometry.
+    grayscale_cam_resized = cv2.resize(grayscale_cam, (orig_w, orig_h))
+
+    overlay = show_cam_on_image(original_rgb, grayscale_cam_resized, use_rgb=True)
+    return overlay  # HxWx3 uint8, same dimensions as original_image

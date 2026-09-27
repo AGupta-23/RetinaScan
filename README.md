@@ -84,6 +84,8 @@ Grad-CAM was applied to five test-set cases — two false negatives, two false p
 
 **Key finding:** two of the four error cases show the model fixating on the optic disc — a normal anatomical landmark with no diagnostic relevance to DR — rather than on lesion regions. This is a specific, recurring failure mode rather than random misclassification noise, and suggests the model may have partly learned disc-proximity as a spurious shortcut correlated with the DR label in training data, rather than a robust lesion-recognition feature. The correctly-classified baseline case, by contrast, shows attention localizing precisely onto visible pathology — demonstrating that when the model gets it right, it's for the right reasons.
 
+**Second finding (post-deployment):** a live test through the deployed Streamlit app surfaced a related pattern — for a correctly-classified DR image, Grad-CAM attention concentrated on the black vignette/border regions of the fundus photograph rather than on a visible lesion cluster elsewhere in the frame. Before treating this as a model issue, a display-alignment bug was ruled out first: the original preprocessing pipeline (`transforms.Resize((224, 224))`) stretches the image without preserving aspect ratio, and the deployed app was overlaying the heatmap on that stretched tensor while showing the original, unstretched photo alongside it — a geometry mismatch that could make correctly-located attention appear misplaced. This was fixed by resizing the Grad-CAM output back onto the original image's true dimensions before overlaying (see `app/explain.py`). With that fix confirmed, the border-attention pattern persisted, indicating the model has, in at least one case, learned to weight non-lesion structural cues (image borders, similar in spirit to the earlier optic-disc finding) alongside or instead of pathology. Together, both findings point to the same underlying risk: the model can reach a correct answer via a shortcut rather than robust lesion recognition, which does not surface as an error in accuracy metrics alone.
+
 ---
 
 ## Deployment
@@ -169,6 +171,7 @@ This project is a proof-of-concept, not a clinically deployable tool:
 - **Domain shift risk:** The model is trained on APTOS 2019 images collected under specific conditions; real hospital images (different cameras, lighting, patient populations) may differ enough to hurt performance.
 - **No clinical validation:** Metrics are computed on a held-out split of the same dataset, not validated against real patient outcomes or reviewed by ophthalmologists.
 - **Not a diagnostic replacement:** The system is designed as a screening-assistance concept, not a substitute for professional diagnosis.
+- **Explainability caveat:** Grad-CAM analysis (Phase 9, and a follow-up check during deployment) found the model's attention sometimes concentrates on non-lesion regions — the optic disc in some error cases, and image border/vignette artifacts in at least one correctly-classified case — rather than consistently localizing to visible pathology. This suggests partial reliance on spurious structural shortcuts rather than fully robust lesion-based reasoning, even where the final classification is correct.
 
 ---
 
