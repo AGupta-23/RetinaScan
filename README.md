@@ -88,12 +88,15 @@ Grad-CAM was applied to five test-set cases — two false negatives, two false p
 
 ## Deployment
 
-The final trained model is downloaded from Kaggle and integrated into a **Streamlit web app**:
+The checkpoint is loaded into a **Streamlit** lab (`streamlit run app/app.py`). If `models/best_model.pth` is missing (it is gitignored), the app downloads the v1.0 GitHub Release once and caches it.
 
-1. User uploads a retinal fundus image
-2. App preprocesses the image (resize, normalize) to match training conditions
-3. Model returns a prediction (DR / No DR) with a confidence score
-4. Grad-CAM heatmap is displayed alongside the original image
+After an upload the workbench is result-first:
+
+1. Preprocess the fundus the same way as training (224×224, ImageNet mean/std).
+2. Show the **screening result**: DR / No DR / borderline, P(DR) on a No-DR→DR gauge, and a short interpretation.
+3. Show **evidence** underneath: full-frame photograph (padded, not cropped) beside Grad-CAM from `layer4[-1]`. Warm colour is model attention, not a lesion atlas.
+
+The demo UI lives under `app/` (`app.py` entry, `inference.py`, `explain.py`, `ui.py`, `styles.css`).
 
 ---
 
@@ -101,12 +104,20 @@ The final trained model is downloaded from Kaggle and integrated into a **Stream
 
 ```
 retinascan/
-├── data/          # placeholder only — datasets live on Kaggle, never here
+├── data/          # placeholder only — datasets live on Kaggle
 ├── notebooks/     # Kaggle notebook code, synced via git
-├── src/           # reusable Python modules (preprocessing, model, training, gradcam)
-├── models/        # downloaded best_model.pth
-├── app/           # Streamlit app code
-├── outputs/       # metrics CSVs, plots, sample Grad-CAM images
+├── src/           # training-time modules (dataset, model)
+├── models/        # local best_model.pth (gitignored)
+├── app/
+│   ├── app.py         # Streamlit entry
+│   ├── config.py      # paths and thresholds
+│   ├── loader.py      # checkpoint load
+│   ├── inference.py   # preprocess + score
+│   ├── explain.py     # Grad-CAM
+│   ├── ui.py          # layout
+│   ├── styles.css
+│   └── assets/        # iris mark
+├── outputs/       # metrics, plots, sample Grad-CAM images
 ├── README.md
 └── requirements.txt
 ```

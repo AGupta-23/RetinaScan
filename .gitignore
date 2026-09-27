@@ -2,3 +2,4 @@ venv
 RetinaVision-AI-Project-Execution-Guide.docx
 phase7Check.py
 hf_upload_model.py
+__pycache__

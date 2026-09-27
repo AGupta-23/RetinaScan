@@ -2,8 +2,8 @@
 
 **Progress Tracker**
 
-**Currently On:** Phase 6, Task 6.1
-**Last Updated:** 14th Aug
+**Currently On:** Complete (Phase 10)
+**Last Updated:** 26 Sep 2026
 
 ---
 
@@ -102,7 +102,7 @@ RetinaScan is an end-to-end deep learning pipeline that classifies retinal fundu
 **What happens:** Run the trained model on the held-out test set. Compute accuracy, F1-score, precision, recall, confusion matrix. Analyze misclassifications.
 
 - [✅] 8.1 Run inference on test set
-- [✅] 8.2 Compute Accuracy/Precision/Recall/F1 — results: _____
+- [✅] 8.2 Compute Accuracy/Precision/Recall/F1 — results: 96.18% / 0.9640 / 0.9606 / 0.9623
 - [✅] 8.3 Build + analyze confusion matrix
 - [✅] 8.4 Review misclassified samples for patterns
 - [✅] 8.5 Download metrics + confusion matrix locally
@@ -124,14 +124,14 @@ RetinaScan is an end-to-end deep learning pipeline that classifies retinal fundu
 
 **What happens:** Download trained model + sample images locally. Build Streamlit app: upload image → preprocess → predict → display result + confidence + Grad-CAM heatmap. Write final README with problem statement, dataset, pipeline, results, and how to run.
 
-- [ ] 10.1 Choose interface: Streamlit
-- [ ] 10.2 Build upload + preprocessing + inference flow
-- [ ] 10.3 Display prediction + confidence score
-- [ ] 10.4 Display Grad-CAM heatmap alongside original image
-- [ ] 10.5 Test end-to-end locally
-- [ ] 10.6 Finalize README.md (problem statement, dataset, pipeline, results, how to run, screenshots)
-- [ ] 10.7 Write limitations section (regulatory, domain shift, no clinical validation)
-- [ ] 10.8 Final GitHub cleanup
+- [✅] 10.1 Choose interface: Streamlit
+- [✅] 10.2 Build upload + preprocessing + inference flow
+- [✅] 10.3 Display prediction + confidence score
+- [✅] 10.4 Display Grad-CAM heatmap alongside original image
+- [✅] 10.5 Test end-to-end locally
+- [✅] 10.6 Finalize README.md (problem statement, dataset, pipeline, results, how to run)
+- [✅] 10.7 Write limitations section (regulatory, domain shift, no clinical validation)
+- [✅] 10.8 Split the Streamlit demo into `app/` modules (`config`, `loader`, `inference`, `explain`, `ui`, `styles.css`) and document the layout in README
 
 ---
 
