@@ -1,5 +1,7 @@
 # RetinaScan — Explainable Deep Learning for Diabetic Retinopathy Detection
 
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://retinascan23.streamlit.app/)
+
 RetinaScan is an end-to-end deep learning pipeline that classifies retinal fundus images as **DR (Diabetic Retinopathy present)** or **No DR**, using transfer learning on a pretrained ResNet50. The project covers the complete workflow — data collection, cleaning, preprocessing, exploratory analysis, model training, evaluation, Grad-CAM explainability, and deployment as a live interactive demo.
 
 A user uploads a retinal (fundus) eye image, and the system returns a prediction ("DR" or "No DR") with a confidence score, along with a Grad-CAM heatmap showing which regions of the eye the model focused on to make that decision.
